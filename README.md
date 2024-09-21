@@ -1,6 +1,8 @@
-# captureforms.com
+# python-remix-starter
 
-A microsas that gives you an endpoint to which you can submit your forms from any web page. We collect all the data and then make it available for you to export them in CSV or JSON files and eventually build integrations that you can leverage from or as part as your form submission.
+A template repo that is created by Ashwanth for personal use, but feel free to use / modify it for your purpose as well. Lot of things in here are very opininated and suited for personal use.
+
+License: https://opensource.org/license/mit
 
 ---
 
