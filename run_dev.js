@@ -1,8 +1,3 @@
-// This script is used to start all the required process locally which includes the following
-// 1. Postgres Container for DB for the API
-// 2. API Python code using nodemon
-// 3. Frontend code using npm run dev
-// The 2 and 3 should be run using concurrently but only after 1 is setup and running properly
 import concurrently from "concurrently";
 import { PostgreSqlContainer } from "@testcontainers/postgresql";
 import { Wait } from "testcontainers";
@@ -10,9 +5,11 @@ import path from "path";
 import * as fs from "node:fs";
 // Ref - https://iamwebwiz.medium.com/how-to-fix-dirname-is-not-defined-in-es-module-scope-34d94a86694d
 import { fileURLToPath } from "url";
-import { existsSync } from "fs";
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
+
+// TODO: Update this when you create a new project
+const DATABASE_NAME = "awesomeapp";
 
 const localPgData = path.resolve(__dirname, "db_data/");
 const mountLocalDbPathForPersistence = {
@@ -20,7 +17,7 @@ const mountLocalDbPathForPersistence = {
   target: "/var/lib/postgresql/data",
 };
 
-const numberOfTimesToWaitOnPostgresContainer = existsSync(
+const numberOfTimesToWaitOnPostgresContainer = fs.existsSync(
   path.join(localPgData, "pg_data")
 )
   ? 1
@@ -48,7 +45,7 @@ await new PostgreSqlContainer("postgres:16-alpine")
     PGDATA: "/var/lib/postgresql/data/pg_data/",
     POSTGRES_PASSWORD: "sa",
     POSTGRES_USER: "sa",
-    POSTGRES_DB: "captureforms",
+    POSTGRES_DB: DATABASE_NAME,
   })
   .start();
 

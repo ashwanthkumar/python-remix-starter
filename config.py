@@ -3,10 +3,12 @@ import os
 
 
 class Config:
+    # TODO: Update this when you create a new project
     SQLALCHEMY_DATABASE_URI = (
         os.environ.get("SQLALCHEMY_DATABASE_URI")
-        or "postgresql://sa:sa@localhost/crawlbox"
+        or "postgresql://sa:sa@localhost/awesomeapp"
     )
+    # TODO: Update this when you create a new project
     # Generated from https://1password.com/password-generator with no Symbols and length as 20
     JWT_SECRET_KEY = "Q4MKrNZ6RJP9PV4iXBad"
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=60)

@@ -2,6 +2,11 @@
 
 A template repo that is created by Ashwanth for personal use, but feel free to use / modify it for your purpose as well. Lot of things in here are very opininated and suited for personal use.
 
+## TODOs for new projects
+- Update the `DATABASE_NAME` in `run_dev.js`
+- Update the `JWT_SECRET_KEY` in `config.py`
+- Update the `SQLALCHEMY_DATABASE_URI` in `config.py`
+
 License: https://opensource.org/license/mit
 
 ---
