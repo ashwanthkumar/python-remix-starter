@@ -1,0 +1,13 @@
+{
+  "restartable": "rs",
+  "ignore": [".git", "**/__pycache__", "node_modules/"],
+  "verbose": true,
+  "events": {
+    "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"captureforms.com server\"'"
+  },
+  "watch": ["api/"],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "py"
+}
