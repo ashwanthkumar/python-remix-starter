@@ -41,11 +41,11 @@ await new PostgreSqlContainer("postgres:16-alpine")
       numberOfTimesToWaitOnPostgresContainer
     )
   )
+  .withUsername("sa")
+  .withPassword("sa")
+  .withDatabase(DATABASE_NAME)
   .withEnvironment({
     PGDATA: "/var/lib/postgresql/data/pg_data/",
-    POSTGRES_PASSWORD: "sa",
-    POSTGRES_USER: "sa",
-    POSTGRES_DB: DATABASE_NAME,
   })
   .start();
 

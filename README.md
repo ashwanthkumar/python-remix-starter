@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 2. Run the database:
 ```
-docker run --rm -v $PWD/db_data:/var/lib/postgresql/data -e PGDATA=/var/lib/postgresql/data/pg_data/ --name captureforms -p 5432:5432 -e POSTGRES_PASSWORD=sa -e POSTGRES_USER=sa -e POSTGRES_DB=captureforms postgres:16-alpine
+docker run --rm -v $PWD/db_data:/var/lib/postgresql/data -e PGDATA=/var/lib/postgresql/data/pg_data/ --name awesomeapp -p 5432:5432 -e POSTGRES_PASSWORD=sa -e POSTGRES_USER=sa -e POSTGRES_DB=awesomeapp postgres:16-alpine
 ```
 
 3. Set up the database:
@@ -127,3 +127,12 @@ Make sure to deploy the output of `npm run build`
 ## Styling
 
 This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+
+---
+
+
+### Common Issues
+
+If you happen to see "Error: Could not find a working container runtime strategy", most likely your Docker Desktop is not running. Please check.
+
+If you're not able to run `npm run dev`, most likely you're not using node 20+, consider doing `nvm install v20` and `nvm alias default v20`.
