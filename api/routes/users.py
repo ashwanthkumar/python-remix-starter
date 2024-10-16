@@ -7,7 +7,7 @@ from api.schema import User
 user_blueprint = Blueprint("users_v1", __name__, url_prefix="/user")
 
 
-@user_blueprint.route("/user/register", methods=["POST"])
+@user_blueprint.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
     email = data.get("email")
@@ -24,7 +24,7 @@ def register():
     return jsonify({"email": user.email}), 201
 
 
-@user_blueprint.route("/user/login", methods=["POST"])
+@user_blueprint.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
     email = data.get("email")
@@ -39,7 +39,7 @@ def login():
     return jsonify({"user_id": user.id, "token": access_token}), 200
 
 
-@user_blueprint.route("/user/me", methods=["GET"])
+@user_blueprint.route("/me", methods=["GET"])
 @jwt_required()
 def me():
     current_user = get_jwt_identity()
