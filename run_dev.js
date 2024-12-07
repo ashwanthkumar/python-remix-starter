@@ -18,18 +18,19 @@ const mountLocalDbPathForPersistence = {
 };
 
 const numberOfTimesToWaitOnPostgresContainer = fs.existsSync(
-  path.join(localPgData, "pg_data")
+  path.join(localPgData, "pg_data"),
 )
   ? 1
   : 2;
 
 console.log(
   "Number of times to wait for PG Container's database started log is: " +
-    numberOfTimesToWaitOnPostgresContainer
+    numberOfTimesToWaitOnPostgresContainer,
 );
 await new PostgreSqlContainer("postgres:16-alpine")
   .withDefaultLogDriver()
   .withBindMounts([mountLocalDbPathForPersistence])
+  .withExposedPorts({ container: 5432, host: 5432 })
   .withLogConsumer((stream) => {
     stream.on("data", (line) => console.log(line));
     stream.on("err", (line) => console.error(line));
@@ -38,8 +39,8 @@ await new PostgreSqlContainer("postgres:16-alpine")
   .withWaitStrategy(
     Wait.forLogMessage(
       /.*database system is ready to accept connections.*/,
-      numberOfTimesToWaitOnPostgresContainer
-    )
+      numberOfTimesToWaitOnPostgresContainer,
+    ),
   )
   .withUsername("sa")
   .withPassword("sa")
@@ -59,7 +60,7 @@ const { result } = concurrently(
     prefix: "name",
     killOthers: ["failure", "success"],
     restartTries: 3,
-  }
+  },
 );
 
 await result;

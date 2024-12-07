@@ -22,6 +22,7 @@ $ source venv/bin/activate
 # install nodev20 if not already
 $ nvm install v20
 $ nvm alias default v20
+$ npm install
 $ node run_dev.js
 
 # Run manually if you added items to requirements.txt
