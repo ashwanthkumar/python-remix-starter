@@ -7,6 +7,7 @@ import * as fs from "node:fs";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
+import process from "process";
 
 // TODO: Update this when you create a new project
 const DATABASE_NAME = "awesomeapp";
@@ -27,7 +28,18 @@ console.log(
   "Number of times to wait for PG Container's database started log is: " +
     numberOfTimesToWaitOnPostgresContainer,
 );
-await new PostgreSqlContainer("postgres:16-alpine")
+let postgresContainer;
+// handler to cleanup the containers
+process.on("SIGINT", async function () {
+  console.log("Caught interrupt signal");
+
+  if (postgresContainer !== undefined) {
+    await postgresContainer.stop();
+  }
+  process.exit();
+});
+
+postgresContainer = await new PostgreSqlContainer("postgres:16-alpine")
   .withDefaultLogDriver()
   .withBindMounts([mountLocalDbPathForPersistence])
   .withExposedPorts({ container: 5432, host: 5432 })
