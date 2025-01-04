@@ -5,3 +5,4 @@ db_data/
 /.cache
 /build
 .env
+.DS_Store

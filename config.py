@@ -4,6 +4,9 @@ import os
 
 class Config:
     # TODO: Update this when you create a new project
+    # Also remember to update the username and password 
+    # on deployment/api/{postgres.systemctl.service and postgres.backup.sh}
+    # Also update the S3_BUCKET inside postgres.backup.sh
     SQLALCHEMY_DATABASE_URI = (
         os.environ.get("SQLALCHEMY_DATABASE_URI")
         or "postgresql://sa:sa@localhost/awesomeapp"

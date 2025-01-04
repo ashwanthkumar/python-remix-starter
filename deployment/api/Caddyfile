@@ -1,0 +1,18 @@
+# Ref - https://github.com/ashwanthkumar/experiments-server/blob/master/Caddyfile
+# For the changes to take effect run: systemctl reload caddy
+
+# Production Instance
+prod.api.domain {
+	reverse_proxy 127.0.0.1:8000 {
+		header_down -Access-Control-Allow-Origin
+		header_down -Access-Control-Allow-Credentials
+	}
+}
+
+# Staging Instance
+stag.api.domain {
+	reverse_proxy 127.0.0.1:8800 {
+		header_down -Access-Control-Allow-Origin
+		header_down -Access-Control-Allow-Credentials
+	}
+}

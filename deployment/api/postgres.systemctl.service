@@ -1,0 +1,23 @@
+[Unit]
+Description=PostgreSQL 16 Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=ubuntu
+Restart=always
+ExecStart=/usr/bin/docker run --name postgres_container -e POSTGRES_USER=pgusername -e POSTGRES_PASSWORD=pg-password-to-update -v /data/postgres_db_data:/var/lib/postgresql/data -p 127.0.0.1:5432:5432 postgres:16
+ExecStop=/usr/bin/docker stop postgres_container
+ExecStopPost=/usr/bin/docker rm postgres_container
+
+ExecStartPost=/bin/sh -c 'until docker exec postgres_container pg_isready -U pgusername; do sleep 1; done'
+
+ExecStartPost=/bin/sh -c '\
+    docker exec postgres_container psql -U pgusername -tc "SELECT 1 FROM pg_database WHERE datname = '"'"'pg_db_prod_name'"'"'" | grep -q 1 || \
+    docker exec postgres_container psql -U pgusername -c "CREATE DATABASE pg_db_prod_name"'
+ExecStartPost=/bin/sh -c '\
+    docker exec postgres_container psql -U pgusername -tc "SELECT 1 FROM pg_database WHERE datname = '"'"'pg_db_stag_name'"'"'" | grep -q 1 || \
+    docker exec postgres_container psql -U pgusername -c "CREATE DATABASE pg_db_stag_name"'
+
+[Install]
+WantedBy=multi-user.target
