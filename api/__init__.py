@@ -15,6 +15,15 @@ def create_app(config_class=Config):
     api.config.from_object(config_class)
 
     db.init_app(api)
+    with api.app_context():
+        try:
+            with db.engine.connect() as conn:
+                conn.execute(db.select(1))
+            print("Database connection successful")
+        except Exception as e:
+            print("Error connecting to database:", str(e))
+            raise e
+
     migrate.init_app(api, db)
 
     jwt.init_app(api)
